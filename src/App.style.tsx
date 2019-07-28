@@ -14,3 +14,8 @@ export const EntryContainer = styled.div`
     background-image: -webkit-linear-gradient(left, ${Color.primaryLight} -30%, ${Color.primaryDark} 130%);
     box-shadow: 0 .5rem 2rem .5rem ${Color.gray};
 `
+
+export const ActiveScreen = styled.div`
+    background-image: -webkit-linear-gradient(top, ${Color.secondary} -100%, ${Color.secondaryLight} 200%);
+    min-height: 43rem;
+`

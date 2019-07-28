@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BankList, Bank} from './UserPanel.style';
+import {BankList, Bank, IntegrateButton} from './UserPanel.style';
 
 type AccountMenuProps = {
 
@@ -8,31 +8,31 @@ type AccountMenuProps = {
 const AccountMenu: React.FC<AccountMenuProps> = (props: AccountMenuProps) => {
     return(
         <>
-            <label htmlFor='IntegrationList'>Integrations:</label>
+            <label htmlFor='IntegrationList'><strong>Integrations:</strong></label>
             <BankList id='IntegrationList'>
                 <Bank>
                     Banco1:
-                    <button
+                    <IntegrateButton
                         onClick={() => alert('ainda não implementado')}
                     >
                         integrar
-                    </button>
+                    </IntegrateButton>
                 </Bank>
                 <Bank>
                     Banco2:
-                    <button
+                    <IntegrateButton
                         onClick={() => alert('ainda não implementado')}
                     >
                         integrar
-                    </button>
+                    </IntegrateButton>
                 </Bank>
                 <Bank>
                     Banco3:
-                    <button
+                    <IntegrateButton
                         onClick={() => alert('ainda não implementado')}
                     >
                         integrar
-                    </button>
+                    </IntegrateButton>
                 </Bank>
             </BankList>
         </>

@@ -4,10 +4,15 @@ import { Spacing, Color } from "../../utils/Constants";
 export const StyledUserPanel = styled.div`
     position: relative
     width: 50%;
-    left: 25%;
-    padding: ${Spacing.XXLarge} ${Spacing.Large};
-    background-color: ${Color.secondary}
-    color: black
+    min-height: 15rem;
+    left: 22.5%;
+    top: ${Spacing.XLarge};
+    padding: ${Spacing.XXLarge} ${Spacing.XXLarge};
+    background-color: white;
+    color: black;
+    border: 1px solid ${Color.gray};
+    border-radius: ${Spacing.XLarge};
+    box-shadow: 0 .5rem 2rem 1px ${Color.secondary};
 `
 
 export const StyledAccountInfo = styled.div`
@@ -42,12 +47,21 @@ export const BankList = styled.ul`
     display: inline;
 `
 
-export const Bank = styled.ul`
+export const Bank = styled.li`
     display: block;
     position: relative;
-    float: right;
-    color: ${Color.secondaryDark}
+    float: right
+    margin-top: ${Spacing.Small}
 `
 
 export const IntegrateButton = styled.ul`
+    display: block;
+    position: relative;
+    float: right;
+    color: ${Color.primary};
+    background-color: white;
+    border: 1px solid ${Color.primary};
+    padding: 0 ${Spacing.Small};
+    border-radius: ${Spacing.XXLarge};
+
 `
