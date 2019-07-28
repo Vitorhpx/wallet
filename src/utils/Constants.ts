@@ -10,7 +10,11 @@ export const Color = {
   grayLight: "#E0E0E0",
   gray: "#BDBDBD",
   grayDark: "#828282",
-  grayXDark: "#333333"
+  grayXDark: "#333333",
+
+  success: "1EB980",
+  alert: "#FFCF44",
+  error: "#FF6859"
 };
 
 export enum Spacing {
