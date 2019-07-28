@@ -14,8 +14,12 @@ type UserPanelState = {
     activeMenu: UserMenu;
 }
 
-class UserPanel extends Component <{}, UserPanelState>{
-    constructor(props: object){
+type UserPanelProps = {
+    logOut: () => void;
+}
+
+class UserPanel extends Component <UserPanelProps, UserPanelState>{
+    constructor(props: UserPanelProps){
         super(props);
         this.setActiveMenu = this.setActiveMenu.bind(this);
         this.state = {
@@ -33,6 +37,7 @@ class UserPanel extends Component <{}, UserPanelState>{
                 <AccountInfo/>
                 <SideBar
                     setActiveMenu={(activeMenu: UserMenu) => this.setActiveMenu(activeMenu)}
+                    logOut={() => this.props.logOut()}
                 />
                 {this.state.activeMenu === UserMenu.ACCOUNT && <AccountMenu/>}
                 {this.state.activeMenu === UserMenu.SUITABILITY && <SuitabilityTest/>}
