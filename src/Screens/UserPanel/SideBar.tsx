@@ -4,6 +4,7 @@ import {StyledSideBar, SideBarButton} from './UserPanel.style';
 
 type SideBarProps = {
     setActiveMenu: (activeBar: UserMenu) => void;
+    logOut: () => void;
 }
 
 const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => (
@@ -12,7 +13,7 @@ const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => (
             <SideBarButton
                 onClick={() => props.setActiveMenu(UserMenu.ACCOUNT)}
             >
-                Account
+                Minha conta
             </SideBarButton>
         </li>
         <li>
@@ -20,6 +21,13 @@ const SideBar: React.FC<SideBarProps> = (props: SideBarProps) => (
                 onClick={() => props.setActiveMenu(UserMenu.SUITABILITY)}
             >
                 Suitability
+            </SideBarButton>
+        </li>
+        <li>
+            <SideBarButton
+                onClick={() => props.logOut()}
+            >
+                Log out
             </SideBarButton>
         </li>
     </StyledSideBar>

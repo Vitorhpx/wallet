@@ -8,7 +8,7 @@ type AccountMenuProps = {
 const AccountMenu: React.FC<AccountMenuProps> = (props: AccountMenuProps) => {
     return(
         <>
-            <label htmlFor='IntegrationList'><strong>Integrations:</strong></label>
+            <label htmlFor='IntegrationList'><strong>Integrações:</strong></label>
             <BankList id='IntegrationList'>
                 <Bank>
                     Banco1:

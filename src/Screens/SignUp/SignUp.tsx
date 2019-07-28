@@ -50,13 +50,13 @@ class SignUp extends Component <{}, SignUpState>{
         return(
             <StyledSignUp>
                 <div><strong> Sign up </strong></div>
-                <label htmlFor='FullNameField'> Full name:</label>
+                <label htmlFor='FullNameField'> Nome completo:</label>
                 <EntryInput
                     id='FullNameField'
                     type='text'
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writeFullName(event.target.value)}
                 />
-                <label htmlFor='BirthDateField'> Birth date:</label>
+                <label htmlFor='BirthDateField'> Nascimento:</label>
                 <EntryInput
                     id='BirthDateField'
                     type='date'
@@ -68,13 +68,13 @@ class SignUp extends Component <{}, SignUpState>{
                     type='email'
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writeEmail(event.target.value)}
                 />
-                <label htmlFor='UsernameField'> Username:</label>
+                <label htmlFor='UsernameField'> Nome de usuário:</label>
                 <EntryInput
                     id='UsernameField'
                     type='text'
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writeUsername(event.target.value)}
                 />
-                <label htmlFor='PasswordField'> Password:</label>
+                <label htmlFor='PasswordField'> Senha:</label>
                 <EntryInput
                     id='PasswordField'
                     type='text'
@@ -83,7 +83,7 @@ class SignUp extends Component <{}, SignUpState>{
                 <Button
                     onClick={() => this.signUp()}
                 >
-                    Create account
+                    Criar conta
                 </Button>
             </StyledSignUp>
         )

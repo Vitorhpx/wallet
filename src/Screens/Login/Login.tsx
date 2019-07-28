@@ -6,8 +6,12 @@ type LoginState = {
     password: string;
 }
 
-class Login extends Component <{}, LoginState>{
-    constructor(props: object){
+type LoginProps = {
+    setSessionToken: (sessionToken: string) => void
+}
+
+class Login extends Component<LoginProps, LoginState>{
+    constructor(props: LoginProps){
         super(props);
         this.state = {
             username: '',
@@ -26,19 +30,21 @@ class Login extends Component <{}, LoginState>{
     login(){
         console.log(this.state.username);
         console.log(this.state.password);
+        const sessionToken: string = this.state.username+this.state.password;
+        this.props.setSessionToken(sessionToken);
     }
 
     render(){
         return(
             <StyledLogin>
                 <div><strong> Login </strong></div>
-                <label htmlFor='UsernameField'> Username:</label>
+                <label htmlFor='UsernameField'> Nome de usuário:</label>
                 <EntryInput
                     id='UsernameField'
                     type='text'
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writeUsername(event.target.value)}
                 />
-                <label htmlFor='PasswordField'> Password:</label>
+                <label htmlFor='PasswordField'> Senha:</label>
                 <EntryInput
                     id='PasswordField'
                     type='text'
@@ -47,7 +53,7 @@ class Login extends Component <{}, LoginState>{
                 <Button
                     onClick={() => this.login()}
                 >
-                    Enter
+                    Entrar
                 </Button>
             </StyledLogin>
         )

@@ -18,15 +18,18 @@ export enum AppScreen {
 }
 
 type AppState = {
-  	activeTab: AppScreen;
+	  activeTab: AppScreen;
+	  sessionToken: string
 };
 
 class App extends Component<{}, AppState> {
 	constructor(props: object) {
 		super(props);
 		this.changeTab = this.changeTab.bind(this);
+		this.setSessionToken = this.setSessionToken.bind(this);
 		this.state = {
-		activeTab: AppScreen.USER_PANEL
+			activeTab: AppScreen.USER_PANEL,
+			sessionToken: ''
 		};
 	}
 
@@ -34,23 +37,41 @@ class App extends Component<{}, AppState> {
 		this.setState({ activeTab: tab });
 	}
 
+	setSessionToken(sessionToken: string){
+		this.setState({sessionToken});
+	}
+
+	logOut(){
+		this.setState({sessionToken: ''});
+	}
+
 	render() {
 		return (
 			<GlobalThemeProvider>
-				<NavBar
-					activeTab={this.state.activeTab}
-					changeTab={this.changeTab}
-				/>
-				{this.state.activeTab !== AppScreen.USER_PANEL && <EntryContainer>
-					<Login />
-					<SignUp/>
-				</EntryContainer>}
-				<ActiveScreen>
-					{this.state.activeTab === AppScreen.USER_PANEL && <UserPanel />}
-					{this.state.activeTab === AppScreen.PORTFOLIO && <Portfolio />}
-					{this.state.activeTab === AppScreen.HISTORY && <History />}
-					{this.state.activeTab === AppScreen.MARKETPLACE && <Marketplace />}
-				</ActiveScreen>
+				{this.state.sessionToken === '' ?
+					<EntryContainer>
+						<Login
+							setSessionToken={(sessionToken: string) => this.setSessionToken(sessionToken) }
+						/>
+						<SignUp/>
+					</EntryContainer>
+				:
+					<>
+						<NavBar
+							activeTab={this.state.activeTab}
+							changeTab={this.changeTab}
+						/>
+						<ActiveScreen>
+							{this.state.activeTab === AppScreen.USER_PANEL &&
+								<UserPanel
+									logOut={() => this.logOut()}
+								/>}
+							{this.state.activeTab === AppScreen.PORTFOLIO && <Portfolio />}
+							{this.state.activeTab === AppScreen.HISTORY && <History />}
+							{this.state.activeTab === AppScreen.MARKETPLACE && <Marketplace />}
+						</ActiveScreen>
+					</>
+				}
 			</GlobalThemeProvider>
 		);
 	}
