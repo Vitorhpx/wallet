@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import NavBar from './Screens/NavBar/NavBar';
+import UserPanel from './Screens/UserPanel/UserPanel';
+import Portfolio from './Screens/Portfolio/Portfolio';
+import History from './Screens/History/History';
+import Marketplace from './Screens/Marketplace/Marketplace';
+import Login from './Screens/Login/Login';
+import SignUp from './Screens/SignUp/SignUp';
 import './App.css';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export enum AppScreen { USER_PANEL, PORTFOLIO, HISTORY, MARKETPLACE }
+
+type AppState = {
+	activeTab: AppScreen
+}
+
+class App extends Component <{}, AppState> {
+    constructor(props: object){
+		super(props);
+		this.changeTab = this.changeTab.bind(this);
+		this.state = {
+			activeTab: AppScreen.USER_PANEL
+		}
+	}
+	
+	changeTab(tab: AppScreen) {
+		this.setState({activeTab: tab});
+	}
+
+    render(){
+        return(
+            <>
+				<NavBar
+					activeTab={this.state.activeTab}
+					changeTab={this.changeTab}
+				/>
+				<Login/>
+				{this.state.activeTab === AppScreen.USER_PANEL &&
+					<UserPanel/>
+				}{this.state.activeTab === AppScreen.PORTFOLIO &&
+					<Portfolio/>
+				}{this.state.activeTab === AppScreen.HISTORY &&
+					<History/>
+				}{this.state.activeTab === AppScreen.MARKETPLACE &&
+					<Marketplace/>
+				}
+			</>
+        )
+    }
 }
 
 export default App;
