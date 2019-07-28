@@ -2,21 +2,33 @@ import React, { Component } from "react";
 import PieChart, {
   PieDataItem
 } from "../../components/mol.pie-chart/pie-chart.component";
-import { getSaldos } from "../../data-sources/wallet";
+import {
+  saldosMock,
+  getSaldosGroupedbyType,
+  Saldo,
+  historicoCategoriaMock
+} from "../../data-sources/wallet";
 import { Grid, Row, Col } from "react-flexbox-grid";
-import { H2, H3 } from "../../components/atm.typography/typography.component";
+import {
+  H2,
+  H3,
+  H1
+} from "../../components/atm.typography/typography.component";
 import { formatNumberToMoney } from "../../utils/String";
 import { ListItemText, List, ListSubheader, ListItem } from "@material-ui/core";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import AccountDetailRow from "../../components/mol.account-detail-row/account-detail-row.component";
+import CategoryDetailRow from "../../components/mol.category-detail-row/category-detail-row.component";
 
 interface IPortfolioProps {}
 
 const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
-  const data: PieDataItem[] = getSaldos().map(item => ({
-    item: item.origem,
-    value: item.valor
+  const saldosGrouped = getSaldosGroupedbyType(saldosMock);
+  const data: PieDataItem[] = Object.keys(saldosGrouped).map(key => ({
+    item: key,
+    value: saldosGrouped[key].reduce((sum: number, curr: Saldo) => {
+      return sum + curr.valor;
+    }, 0)
   }));
   const patrimonio = data.reduce((sum, curr) => {
     return sum + curr.value;
@@ -42,11 +54,12 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
         </Row>
         <Row center="xs">
           <Col xs>
-            <H2>Patrimônio: {formatNumberToMoney(patrimonio)}</H2>
+            <H1>Patrimônio: {formatNumberToMoney(patrimonio)}</H1>
           </Col>
         </Row>
         <Row center="xs">
           <Col xs>
+            {/* TODO: Get real data */}
             <H3>Rendimento: 1.22%</H3>
           </Col>
         </Row>
@@ -63,7 +76,19 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
                     />
                     {index === selectedCell ? <ExpandLess /> : <ExpandMore />}
                   </ListItem>
-                  {index === selectedCell && <AccountDetailRow />}
+                  {index === selectedCell && (
+                    <CategoryDetailRow
+                      categoryData={{
+                        investments: (saldosGrouped[item.item] as Saldo[]).map(
+                          item => ({ name: item.origem, value: item.valor })
+                        ),
+                        graphData: historicoCategoriaMock.map(item => ({
+                          date: item.data,
+                          value: item.saldo
+                        }))
+                      }}
+                    />
+                  )}
                 </React.Fragment>
               ))}
             </List>
