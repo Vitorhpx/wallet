@@ -1,14 +1,12 @@
 import React, { Component } from "react";
-import NavBar from "./Screens/NavBar/NavBar";
+import NavBar from "./components/mol.navBar/navBar.component";
 import UserPanel from "./Screens/UserPanel/UserPanel";
 import Portfolio from "./Screens/Portfolio/Portfolio";
 import History from "./Screens/History/History";
 import Marketplace from "./Screens/Marketplace/Marketplace";
 import Login from "./Screens/Login/Login";
-import SignUp from "./Screens/SignUp/SignUp";
 import "./App.css";
-import GlobalThemeProvider from "./components/global-theme-provider/global-theme-provider.component";
-import { Button } from "@material-ui/core";
+import GlobalThemeProvider from "./components/atm.global-theme-provider/global-theme-provider.component";
 
 export enum AppScreen {
   USER_PANEL,
@@ -36,14 +34,14 @@ class App extends Component<{}, AppState> {
 
   render() {
     return (
-      <>
+      <GlobalThemeProvider>
         <NavBar activeTab={this.state.activeTab} changeTab={this.changeTab} />
         <Login />
         {this.state.activeTab === AppScreen.USER_PANEL && <UserPanel />}
         {this.state.activeTab === AppScreen.PORTFOLIO && <Portfolio />}
         {this.state.activeTab === AppScreen.HISTORY && <History />}
         {this.state.activeTab === AppScreen.MARKETPLACE && <Marketplace />}
-      </>
+      </GlobalThemeProvider>
     );
   }
 }
