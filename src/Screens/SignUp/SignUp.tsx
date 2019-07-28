@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
+import { StyledSignUp, EntryInput, Button} from './SignUp.style'
 
 type SignUpState = {
-    CPF: string;
+    fullName: string;
+    birthDate: string;
+    email: string;
+    username: string;
     password: string;
 }
 
@@ -9,45 +13,79 @@ class SignUp extends Component <{}, SignUpState>{
     constructor(props: object){
         super(props);
         this.state = {
-            CPF: '',
+            fullName: '',
+            birthDate: '',
+            email: '',
+            username: '',
             password: ''
         }
     }
 
-    writeCPF(CPF: string){
-        this.setState({CPF})
+    writeFullName(fullName: string){
+        this.setState({fullName})
+    }
+
+    writeBirthDate(birthDate: string){
+        this.setState({birthDate})
+    }
+
+    writeEmail(email: string){
+        this.setState({email})
+    }
+
+    writeUsername(username: string){
+        this.setState({username})
     }
 
     writePassword(password: string){
         this.setState({password})
     }
 
-    SignUp(){
-        console.log(this.state.CPF);
+    signUp(){
+        console.log(this.state.username);
         console.log(this.state.password);
     }
 
     render(){
         return(
-            <div id='SignUp'>
-                <label htmlFor='CPFField'> CPF:</label>
-                <input
-                    id='CPFField'
+            <StyledSignUp>
+                <div><strong> Sign up </strong></div>
+                <label htmlFor='FullNameField'> Full name:</label>
+                <EntryInput
+                    id='FullNameField'
                     type='text'
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writeCPF(event.target.value)}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writeFullName(event.target.value)}
+                />
+                <label htmlFor='BirthDateField'> Birth date:</label>
+                <EntryInput
+                    id='BirthDateField'
+                    type='date'
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writeBirthDate(event.target.value)}
+                />
+                <label htmlFor='EmailField'> Email:</label>
+                <EntryInput
+                    id='EmailField'
+                    type='email'
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writeEmail(event.target.value)}
+                />
+                <label htmlFor='UsernameField'> Username:</label>
+                <EntryInput
+                    id='UsernameField'
+                    type='text'
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writeUsername(event.target.value)}
                 />
                 <label htmlFor='PasswordField'> Password:</label>
-                <input
+                <EntryInput
                     id='PasswordField'
                     type='text'
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writePassword(event.target.value)}
                 />
-                <button
-                    onClick={() => this.SignUp()}
-                    >
-                    Submit
-                </button>
-            </div>
+                <Button
+                    onClick={() => this.signUp()}
+                >
+                    Create account
+                </Button>
+            </StyledSignUp>
         )
     }
 }
