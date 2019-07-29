@@ -13,8 +13,7 @@ import "./App.css";
 export enum AppScreen {
   USER_PANEL,
   PORTFOLIO,
-  HISTORY,
-  MARKETPLACE
+  HISTORY
 }
 
 type AppState = {
@@ -26,7 +25,7 @@ class App extends Component<{}, AppState> {
     super(props);
     this.changeTab = this.changeTab.bind(this);
     this.state = {
-      activeTab: AppScreen.USER_PANEL
+      activeTab: AppScreen.PORTFOLIO
     };
   }
 
@@ -48,7 +47,6 @@ class App extends Component<{}, AppState> {
           {this.state.activeTab === AppScreen.USER_PANEL && <UserPanel />}
           {this.state.activeTab === AppScreen.PORTFOLIO && <Portfolio />}
           {this.state.activeTab === AppScreen.HISTORY && <History />}
-          {this.state.activeTab === AppScreen.MARKETPLACE && <Marketplace />}
         </ActiveScreen>
       </GlobalThemeProvider>
     );

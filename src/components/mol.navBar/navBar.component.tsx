@@ -1,43 +1,41 @@
 import React from "react";
-import { AppBar, Button } from "@material-ui/core";
+import { AppBar, Button, IconButton } from "@material-ui/core";
 import { AppScreen } from "../../App";
-import { StyledToolBar } from "./navBar.style";
+import { StyledToolBar, IconWrapper, ButtonsWrapper } from "./navBar.style";
+import { AccountCircle } from "@material-ui/icons/";
 
 type NavBarProps = {
-	activeTab: AppScreen;
-	changeTab(tab: AppScreen): void;
+  activeTab: AppScreen;
+  changeTab(tab: AppScreen): void;
 };
 
 const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => (
-	<AppBar position={"static"}>
-		<StyledToolBar>
-			<Button
-				variant="text"
-				color={"secondary"}
-				onClick={() => props.changeTab(AppScreen.USER_PANEL)}
-			>
-				User
-			</Button>
-			<Button
-				color={"secondary"}
-				onClick={() => props.changeTab(AppScreen.PORTFOLIO)}
-			>
-				Portfolio
-			</Button>
-			<Button
-				color={"secondary"}
-				onClick={() => props.changeTab(AppScreen.HISTORY)}
-			>
-				History
-			</Button>
-			<Button
-				color={"secondary"}
-				onClick={() => props.changeTab(AppScreen.MARKETPLACE)}
-			>
-				Marketplace
-			</Button>
-		</StyledToolBar>
-	</AppBar>
+  <AppBar position={"static"}>
+    <StyledToolBar>
+      <IconWrapper>
+        <IconButton
+          color={"secondary"}
+          onClick={() => props.changeTab(AppScreen.USER_PANEL)}
+        >
+          <AccountCircle />
+        </IconButton>
+      </IconWrapper>
+      <ButtonsWrapper>
+        <Button
+          color={"secondary"}
+          onClick={() => props.changeTab(AppScreen.PORTFOLIO)}
+        >
+          Carteira
+        </Button>
+        <Button
+          color={"secondary"}
+          onClick={() => props.changeTab(AppScreen.HISTORY)}
+        >
+          Extrato
+        </Button>
+      </ButtonsWrapper>
+    </StyledToolBar>
+  </AppBar>
 );
 
 export default NavBar;
