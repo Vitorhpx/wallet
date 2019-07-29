@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
+import {Transaction, getMoneyMovementCard, bankEnum, accounts} from '../../data-sources/moneyMovement';
 
-type Transaction = {
-    date: string;
-    time: string;
-    value: number;
-    counterpart: string;
-    desc: string;
-}
+
+import { formatNumberToMoney } from "../../utils/String";
+import List from '@material-ui/core/List';
+import ListItem, { ListItemProps } from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 type HistoryState = {
     transactions: Array<Transaction>;
@@ -16,26 +15,30 @@ class History extends Component <{}, HistoryState>{
     constructor(props: object){
         super(props);
         this.state = {
-            transactions: [
-                {date: "2019-07-28", time:"14:29", value: 29.99, counterpart: "quitanda", desc:"bananinha"},
-                {date: "2019-07-29", time:"14:35", value: 19.99, counterpart: "quitanda", desc:"cenourinha"},
-            ]
+            transactions: []
+        }
+    }
+
+    async componentDidMount(){
+        if(this.state.transactions.length === 0){
+            const bank1History: Array<Transaction> = await getMoneyMovementCard(bankEnum.banco1, accounts.conta1);
+            this.setState({transactions: bank1History});
         }
     }
 
     render(){
         return(
             <div>
-                <ul>
-                {this.state.transactions.map( (trans: Transaction) =>
-                        <li>
-                            <span><strong>{`${trans.value} `}</strong></span>
-                            <span>{`${trans.counterpart} `}</span>-<span>{` ${trans.desc} `}</span>
-                            <span>{` date: ${trans.date}`}</span>
-                            <span>{` time: ${trans.time}`}</span>
-                        </li>
-                    )}
-                </ul>
+                <List component="nav" aria-labelledby="nested-list-subheader">
+                    {this.state.transactions.map( (transaction: Transaction, key: number) =>
+                    (
+                        <ListItem key={key}>
+                            <ListItemText
+                                primary={`${formatNumberToMoney(transaction.Amount)}`}
+                            />
+                        </ListItem>
+                    ))}
+                </List>
             </div>
         )
     }
