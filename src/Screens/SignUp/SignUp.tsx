@@ -1,93 +1,111 @@
-import React, {Component} from 'react';
-import { StyledSignUp, EntryInput, Button} from './SignUp.style'
+import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import { AppPaths } from '../../utils/AppPaths';
 
-type SignUpState = {
-    fullName: string;
-    birthDate: string;
-    email: string;
-    username: string;
-    password: string;
+const useStyles = makeStyles(theme => ({
+  '@global': {
+    body: {
+      backgroundColor: theme.palette.common.white
+    }
+  },
+  paper: {
+    marginTop: theme.spacing(6),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3)
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2)
+  }
+}));
+
+export default function SignUp() {
+  const classes = useStyles();
+
+  return (
+    <Container component='main' maxWidth='xs'>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component='h1' variant='h5'>
+          Registrar-se
+        </Typography>
+        <form className={classes.form} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
+                id='email'
+                label='Endereço de Email'
+                name='email'
+                autoComplete='email'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
+                name='token'
+                label='Token do Banco'
+                id='token'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
+                name='password'
+                label='Senha'
+                type='password'
+                id='password'
+                autoComplete='current-password'
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            color='primary'
+            className={classes.submit}
+          >
+            Registrar-se
+          </Button>
+          <Grid container justify='flex-end'>
+            <Grid item>
+              <Link href={AppPaths.login.path} variant='body2'>
+                Já possui uma conta? Entre aqui
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
+  );
 }
-
-class SignUp extends Component <{}, SignUpState>{
-    constructor(props: object){
-        super(props);
-        this.state = {
-            fullName: '',
-            birthDate: '',
-            email: '',
-            username: '',
-            password: ''
-        }
-    }
-
-    writeFullName(fullName: string){
-        this.setState({fullName})
-    }
-
-    writeBirthDate(birthDate: string){
-        this.setState({birthDate})
-    }
-
-    writeEmail(email: string){
-        this.setState({email})
-    }
-
-    writeUsername(username: string){
-        this.setState({username})
-    }
-
-    writePassword(password: string){
-        this.setState({password})
-    }
-
-    signUp(){
-        console.log(this.state.username);
-        console.log(this.state.password);
-    }
-
-    render(){
-        return(
-            <StyledSignUp>
-                <div><strong> Sign up </strong></div>
-                <label htmlFor='FullNameField'> Full name:</label>
-                <EntryInput
-                    id='FullNameField'
-                    type='text'
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writeFullName(event.target.value)}
-                />
-                <label htmlFor='BirthDateField'> Birth date:</label>
-                <EntryInput
-                    id='BirthDateField'
-                    type='date'
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writeBirthDate(event.target.value)}
-                />
-                <label htmlFor='EmailField'> Email:</label>
-                <EntryInput
-                    id='EmailField'
-                    type='email'
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writeEmail(event.target.value)}
-                />
-                <label htmlFor='UsernameField'> Username:</label>
-                <EntryInput
-                    id='UsernameField'
-                    type='text'
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writeUsername(event.target.value)}
-                />
-                <label htmlFor='PasswordField'> Password:</label>
-                <EntryInput
-                    id='PasswordField'
-                    type='text'
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.writePassword(event.target.value)}
-                />
-                <Button
-                    onClick={() => this.signUp()}
-                >
-                    Create account
-                </Button>
-            </StyledSignUp>
-        )
-    }
-}
-
-export default SignUp;
