@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import NavBar from "./components/mol.navBar/navBar.component";
-import UserPanel from "./Screens/UserPanel/UserPanel";
-import Portfolio from "./Screens/Portfolio/Portfolio";
-import History from "./Screens/History/History";
-import Marketplace from "./Screens/Marketplace/Marketplace";
-import Login from "./Screens/Login/Login";
-import SignUp from "./Screens/SignUp/SignUp";
-import { EntryContainer, ActiveScreen } from "./App.style";
-import GlobalThemeProvider from "./components/atm.global-theme-provider/global-theme-provider.component";
-import "./App.css";
+import React, { Component } from 'react';
+import NavBar from './components/mol.navBar/navBar.component';
+import UserPanel from './Screens/UserPanel/UserPanel';
+import Portfolio from './Screens/Portfolio/Portfolio';
+import History from './Screens/History/History';
+import Marketplace from './Screens/Marketplace/Marketplace';
+import Login from './Screens/Login/Login';
+import SignUp from './Screens/SignUp/SignUp';
+import { EntryContainer, ActiveScreen } from './App.style';
+import GlobalThemeProvider from './components/atm.global-theme-provider/global-theme-provider.component';
+import './App.css';
 
 export enum AppScreen {
   USER_PANEL,
@@ -38,12 +38,12 @@ class App extends Component<{}, AppState> {
     return (
       <GlobalThemeProvider>
         <NavBar activeTab={this.state.activeTab} changeTab={this.changeTab} />
-        {this.state.activeTab === AppScreen.USER_PANEL && (
+        {/* {this.state.activeTab === AppScreen.USER_PANEL && (
           <EntryContainer>
             <Login />
             <SignUp />
           </EntryContainer>
-        )}
+        )} */}
         <ActiveScreen>
           {this.state.activeTab === AppScreen.USER_PANEL && <UserPanel />}
           {this.state.activeTab === AppScreen.PORTFOLIO && <Portfolio />}
