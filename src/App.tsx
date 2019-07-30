@@ -1,14 +1,16 @@
-import React, { Component } from "react";
-import NavBar from "./components/mol.navBar/navBar.component";
-import UserPanel from "./Screens/UserPanel/UserPanel";
-import Portfolio from "./Screens/Portfolio/Portfolio";
-import History from "./Screens/History/History";
-import Marketplace from "./Screens/Marketplace/Marketplace";
-import Login from "./Screens/Login/Login";
-import SignUp from "./Screens/SignUp/SignUp";
-import { EntryContainer, ActiveScreen } from "./App.style";
-import GlobalThemeProvider from "./components/atm.global-theme-provider/global-theme-provider.component";
-import "./App.css";
+import React, { Component } from 'react';
+import NavBar from './components/mol.navBar/navBar.component';
+import UserPanel from './Screens/UserPanel/UserPanel';
+import Portfolio from './Screens/Portfolio/Portfolio';
+import History from './Screens/History/History';
+import Marketplace from './Screens/Marketplace/Marketplace';
+import Login from './Screens/Login/Login';
+import SignUp from './Screens/SignUp/SignUp';
+import { EntryContainer, ActiveScreen } from './App.style';
+import GlobalThemeProvider from './components/atm.global-theme-provider/global-theme-provider.component';
+import './App.css';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { AppPaths } from '../src/utils/AppPaths';
 
 export enum AppScreen {
   USER_PANEL,
@@ -35,20 +37,14 @@ class App extends Component<{}, AppState> {
 
   render() {
     return (
-      <GlobalThemeProvider>
-        <NavBar activeTab={this.state.activeTab} changeTab={this.changeTab} />
-        {this.state.activeTab === AppScreen.USER_PANEL && (
-          <EntryContainer>
-            <Login />
-            <SignUp />
-          </EntryContainer>
-        )}
-        <ActiveScreen>
-          {this.state.activeTab === AppScreen.USER_PANEL && <UserPanel />}
-          {this.state.activeTab === AppScreen.PORTFOLIO && <Portfolio />}
-          {this.state.activeTab === AppScreen.HISTORY && <History />}
-        </ActiveScreen>
-      </GlobalThemeProvider>
+      <Router>
+        <GlobalThemeProvider>
+          <NavBar />
+          <Route path={AppPaths.login.path} exact component={Login} />
+          <Route path={AppPaths.signup.path} component={SignUp} />
+          <Route path={AppPaths.wallet.path} component={Portfolio} />
+        </GlobalThemeProvider>
+      </Router>
     );
   }
 }
