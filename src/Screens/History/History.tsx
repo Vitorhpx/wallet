@@ -20,6 +20,7 @@ class History extends Component <{}, HistoryState>{
     }
 
     async componentDidMount(){
+        console.log(this.state)
         if(this.state.transactions.length === 0){
             const bank1History: Array<Transaction> = await getMoneyMovementCard(bankEnum.banco1, accounts.conta1);
             this.setState({transactions: bank1History});
@@ -35,6 +36,7 @@ class History extends Component <{}, HistoryState>{
                         <ListItem key={key}>
                             <ListItemText
                                 primary={`${formatNumberToMoney(transaction.Amount)}`}
+                                secondary={` ${transaction.CreatedAt}`}
                             />
                         </ListItem>
                     ))}
