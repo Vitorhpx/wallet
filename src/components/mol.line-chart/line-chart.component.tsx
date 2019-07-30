@@ -18,7 +18,7 @@ const LineChart: React.FunctionComponent<ILineChartProps> = props => {
   return (
     <Chart height={350} data={data} scale={scale} forceFit>
       <Axis />
-      <Axis name="Valor" />
+      <Axis name="Valor " />
       <Tooltip crosshairs={{ type: "y" }} />
       <Geom type="line" position="x*y" size={2} color={`${Color.primary}`} />
       <Geom

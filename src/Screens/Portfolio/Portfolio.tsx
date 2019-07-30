@@ -15,7 +15,13 @@ import {
   H1
 } from "../../components/atm.typography/typography.component";
 import { formatNumberToMoney } from "../../utils/String";
-import { ListItemText, List, ListSubheader, ListItem } from "@material-ui/core";
+import {
+  ListItemText,
+  List,
+  ListSubheader,
+  ListItem,
+  Divider
+} from "@material-ui/core";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import CategoryDetailRow from "../../components/mol.category-detail-row/category-detail-row.component";
@@ -89,6 +95,7 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
                       }}
                     />
                   )}
+                  <Divider />
                 </React.Fragment>
               ))}
             </List>
@@ -99,4 +106,4 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
   );
 };
 
-export default Portfolio;
+export default React.memo(Portfolio);

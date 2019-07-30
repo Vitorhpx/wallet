@@ -12,7 +12,7 @@ interface IPieChartProps {
   data: PieDataItem[];
 }
 
-const PieChart: React.FunctionComponent<IPieChartProps> = props => {
+const PieChart: React.SFC<IPieChartProps> = props => {
   const dataSum = props.data.reduce((sum, curr) => {
     return sum + curr.value;
   }, 0);
@@ -66,4 +66,4 @@ const getLabelName = (name: string) => {
   }
 };
 
-export default PieChart;
+export default React.memo(PieChart);
