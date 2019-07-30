@@ -1,5 +1,6 @@
 import moment from 'moment';
 
+
 export const formatNumberToMoney = (value: number) =>
   `${value.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
@@ -8,6 +9,7 @@ export const formatNumberToMoney = (value: number) =>
   })}`;
 
 export const formatDateTime = (datetime: string) =>{
-  const timestamp: number = Date.parse(datetime);
-  
+  const m: moment.Moment = moment(datetime);
+  console.log(m)
+  return m.format('hh:mm ddd DD/MM/YY');
 }

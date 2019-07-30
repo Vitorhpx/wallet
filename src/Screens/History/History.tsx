@@ -1,19 +1,14 @@
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import React, { Component } from 'react';
 import {
-  Transaction,
-  getMoneyMovementCard,
-  bankEnum,
   accounts,
-  formatTransactionPaymentDate
-} from '../../data-sources/moneyMovement';
-
-import { formatNumberToMoney } from '../../utils/String';
-import List from '@material-ui/core/List';
-import ListItem, { ListItemProps } from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { Grid, Row, Col } from 'react-flexbox-grid';
-import { Divider } from '@material-ui/core';
-import { H1 } from '../../components/atm.typography/typography.component';
+  bankEnum,
+  getMoneyMovementCard,
+  Transaction
+} from '../../data-sources/fetch';
+import { formatDateTime, formatNumberToMoney } from '../../utils/String';
 
 type HistoryState = {
   transactions: Array<Transaction>;
@@ -47,8 +42,13 @@ class History extends Component<{}, HistoryState> {
               <ListItem key={key}>
                 <ListItemText
                   primary={`${formatNumberToMoney(transaction.Amount)}`}
-                  secondary={` ${transaction.CreatedAt}`}
+                  secondary={` ${formatDateTime(transaction.CreatedAt)}`}
                 />
+                <ListItemText
+                  primary={`${transaction.Desc}`}
+                  secondary={`${transaction.TypeTransaction}`}
+                />
+                <ListItemText primary={`${transaction.Bank}`} />
               </ListItem>
             )
           )}
