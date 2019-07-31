@@ -1,7 +1,7 @@
-import { Axis, Chart, Coord, Geom, Label, Tooltip } from "bizcharts";
-import * as React from "react";
-import { ChartWrapper } from "./pie-chart.styled";
-import { Spacing } from "../../utils/Constants";
+import { Axis, Chart, Coord, Geom, Label } from 'bizcharts';
+import * as React from 'react';
+import { Spacing } from '../../utils/Constants';
+import { ChartWrapper } from './pie-chart.styled';
 
 export interface PieDataItem {
   item: string;
@@ -24,7 +24,7 @@ const PieChart: React.SFC<IPieChartProps> = props => {
   const cols = {
     percent: {
       formatter: (val: any) => {
-        val = Math.round(val * 100) + "%";
+        val = Math.round(val * 100) + '%';
         return val;
       }
     }
@@ -35,18 +35,18 @@ const PieChart: React.SFC<IPieChartProps> = props => {
       <Chart
         height={window.innerHeight / 2}
         data={transformedData}
-        renderer="svg"
+        renderer='svg'
         scale={cols}
         forceFit
         padding={parseInt(Spacing.XLarge, 10)}
       >
-        <Coord type="theta" radius={0.75} />
-        <Axis name="percent" />
-        <Geom type="intervalStack" position="percent" color="item">
+        <Coord type='theta' radius={0.75} />
+        <Axis name='percent' />
+        <Geom type='intervalStack' position='percent' color='item'>
           <Label
-            content="percent"
+            content='percent'
             formatter={(val, item) => {
-              return getLabelName(item.point.item) + ": " + val;
+              return getLabelName(item.point.item) + ': ' + val;
             }}
           />
         </Geom>
@@ -57,10 +57,10 @@ const PieChart: React.SFC<IPieChartProps> = props => {
 
 const getLabelName = (name: string) => {
   switch (name) {
-    case "Fundo de Risco":
-      return "Arrojado";
-    case "Fundo de Emergência":
-      return "Emergência";
+    case 'Fundo de Risco':
+      return 'Arrojado';
+    case 'Fundo de Emergência':
+      return 'Emergência';
     default:
       return name;
   }

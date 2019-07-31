@@ -1,18 +1,17 @@
-import React from 'react';
-import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import axios from 'axios';
+import React from 'react';
+import { authUrl, baseUrl } from '../../data-sources/users';
+import { AUTH_TOKEN } from '../../utils/API';
 import { AppPaths } from '../../utils/AppPaths';
 
 const useStyles = makeStyles(theme => ({
@@ -39,7 +38,9 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2)
   }
 }));
-interface ISignInProps {}
+interface ISignInProps {
+  handleSignUpClick: (event: any) => void;
+}
 
 export const SignIn: React.FunctionComponent<ISignInProps> = props => {
   const classes = useStyles();
@@ -56,13 +57,13 @@ export const SignIn: React.FunctionComponent<ISignInProps> = props => {
     };
 
     axios
-      .post(
-        `https://y220sfo8mg.execute-api.us-east-1.amazonaws.com/dev/auth`,
-        user
-      )
+      .post(`${baseUrl}${authUrl}`, user)
       .then(res => {
-        console.log(res);
-        console.log(res.data);
+        const { token } = res.data;
+        localStorage.setItem(AUTH_TOKEN, token);
+        if (token) {
+          window.location.replace(AppPaths.home.path);
+        }
       })
       .catch(error => {
         console.log(error);
@@ -116,8 +117,8 @@ export const SignIn: React.FunctionComponent<ISignInProps> = props => {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href={AppPaths.signup.path} variant='body2'>
-                {"Don't have an account? Sign Up"}
+              <Link onClick={props.handleSignUpClick} variant='body2'>
+                "Don't have an account? Sign Up"
               </Link>
             </Grid>
           </Grid>

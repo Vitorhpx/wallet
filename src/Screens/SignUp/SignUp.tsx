@@ -1,17 +1,21 @@
-import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import axios from 'axios';
+import React from 'react';
+import {
+  baseUrl,
+  registerUrl,
+  UserRegisterInfo
+} from '../../data-sources/users';
+import { AUTH_TOKEN } from '../../utils/API';
 import { AppPaths } from '../../utils/AppPaths';
 
 const useStyles = makeStyles(theme => ({
@@ -39,8 +43,40 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignUp() {
+interface ISignUpProps {
+  handleSignInClick: (event: any) => void;
+}
+
+const SignUp: React.FunctionComponent<ISignUpProps> = props => {
   const classes = useStyles();
+
+  const [username, setUsername] = React.useState();
+  const [password, setPassword] = React.useState();
+  const [bankToken, setBankToken] = React.useState();
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const user: UserRegisterInfo = {
+      username: username,
+      password: password,
+      bankToken: bankToken
+    };
+
+    axios
+      .post(`${baseUrl}${registerUrl}`, user)
+      .then(res => {
+        const { token } = res.data;
+        localStorage.setItem(AUTH_TOKEN, token);
+        if (token) {
+          window.location.replace(AppPaths.home.path);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        return error;
+      });
+  };
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -52,17 +88,17 @@ export default function SignUp() {
         <Typography component='h1' variant='h5'>
           Registrar-se
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 variant='outlined'
                 required
                 fullWidth
-                id='email'
-                label='Endereço de Email'
-                name='email'
-                autoComplete='email'
+                id='username'
+                label='Nome de Usuário'
+                name='username'
+                onChange={event => setUsername(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -72,7 +108,8 @@ export default function SignUp() {
                 fullWidth
                 name='token'
                 label='Token do Banco'
-                id='token'
+                id='bankToken'
+                onChange={event => setBankToken(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -85,6 +122,7 @@ export default function SignUp() {
                 type='password'
                 id='password'
                 autoComplete='current-password'
+                onChange={event => setPassword(event.target.value)}
               />
             </Grid>
           </Grid>
@@ -99,7 +137,7 @@ export default function SignUp() {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link href={AppPaths.login.path} variant='body2'>
+              <Link onClick={props.handleSignInClick} variant='body2'>
                 Já possui uma conta? Entre aqui
               </Link>
             </Grid>
@@ -108,4 +146,6 @@ export default function SignUp() {
       </div>
     </Container>
   );
-}
+};
+
+export default SignUp;

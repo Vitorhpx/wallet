@@ -1,10 +1,10 @@
-import * as React from "react";
-import { Row, Col } from "react-flexbox-grid";
-import { List, ListItem, ListItemText, Box } from "@material-ui/core";
-import { formatNumberToMoney } from "../../utils/String";
-import { ListWrapper } from "./category-detail-row.style";
-import LineChart from "../mol.line-chart/line-chart.component";
-import { getDateToString } from "../../utils/Date";
+import { List, ListItem, ListItemText } from '@material-ui/core';
+import * as React from 'react';
+import { Col, Row } from 'react-flexbox-grid';
+import { getDateToString } from '../../utils/Date';
+import { formatNumberToMoney } from '../../utils/String';
+import LineChart from '../mol.line-chart/line-chart.component';
+import { ListWrapper } from './category-detail-row.style';
 
 interface CategoryData {
   investments: {

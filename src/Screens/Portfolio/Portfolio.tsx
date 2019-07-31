@@ -1,30 +1,20 @@
-import React, { Component } from "react";
+import { Divider, List, ListItem, ListItemText } from '@material-ui/core';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import React from 'react';
+import { Col, Grid, Row } from 'react-flexbox-grid';
+import { H1, H3 } from '../../components/atm.typography/typography.component';
+import CategoryDetailRow from '../../components/mol.category-detail-row/category-detail-row.component';
 import PieChart, {
   PieDataItem
-} from "../../components/mol.pie-chart/pie-chart.component";
+} from '../../components/mol.pie-chart/pie-chart.component';
 import {
-  saldosMock,
   getSaldosGroupedbyType,
+  historicoCategoriaMock,
   Saldo,
-  historicoCategoriaMock
-} from "../../data-sources/wallet";
-import { Grid, Row, Col } from "react-flexbox-grid";
-import {
-  H2,
-  H3,
-  H1
-} from "../../components/atm.typography/typography.component";
-import { formatNumberToMoney } from "../../utils/String";
-import {
-  ListItemText,
-  List,
-  ListSubheader,
-  ListItem,
-  Divider
-} from "@material-ui/core";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import CategoryDetailRow from "../../components/mol.category-detail-row/category-detail-row.component";
+  saldosMock
+} from '../../data-sources/wallet';
+import { formatNumberToMoney } from '../../utils/String';
 
 interface IPortfolioProps {}
 
@@ -53,25 +43,25 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
   return (
     <>
       <Grid fluid>
-        <Row center="xs">
+        <Row center='xs'>
           <Col xs={12} lg={8}>
             <PieChart data={data} />
           </Col>
         </Row>
-        <Row center="xs">
+        <Row center='xs'>
           <Col xs>
             <H1>Patrimônio: {formatNumberToMoney(patrimonio)}</H1>
           </Col>
         </Row>
-        <Row center="xs">
+        <Row center='xs'>
           <Col xs>
             {/* TODO: Get real data */}
             <H3>Rendimento: 1.22%</H3>
           </Col>
         </Row>
-        <Row center="xs">
+        <Row center='xs'>
           <Col xs={12} md={8}>
-            <List component="nav" aria-labelledby="nested-list-subheader">
+            <List component='nav' aria-labelledby='nested-list-subheader'>
               {data.map((item, index) => (
                 <React.Fragment key={item.item}>
                   <ListItem button onClick={() => handleCellClick(index)}>
