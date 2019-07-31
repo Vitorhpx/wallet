@@ -1,62 +1,60 @@
-import { promises } from "dns";
-
-export const baseURL: string = "https://www.btgpactual.com/btgcode/api/";
+export const baseURL: string = 'https://www.btgpactual.com/btgcode/api/';
 
 export type Transaction = {
-    Bank: string;
-    IdInvoice: string;
-    Account: string;
-    IdCard: string;
-    TypeTransaction: string;
-    Desc: string;
-    Amount: number;
-    Id: string;
-    Type: string;
-    CreatedAt: string;
-    Counterpart: string;
-}
+  Bank: string;
+  IdInvoice: string;
+  Account: string;
+  IdCard: string;
+  TypeTransaction: string;
+  Desc: string;
+  Amount: number;
+  Id: string;
+  Type: string;
+  CreatedAt: string;
+  Counterpart: string;
+};
 
 export type CardData = {
-    Bank: string;
-    Account: string;
-    CardNumber: string;
-    CreditLimit: number;
-    Id: string;
-    PaymentDay: string;
-    CreatedAt: string;
-}
+  Bank: string;
+  Account: string;
+  CardNumber: string;
+  CreditLimit: number;
+  Id: string;
+  PaymentDay: string;
+  CreatedAt: string;
+};
 
 export type Investment = {
-    bank: string;
-    risk: string;
-    expiryDate: string;
-    id: string;
-    redemptionDate: string;
-    productName: string;
-}
+  bank: string;
+  risk: string;
+  expiryDate: string;
+  id: string;
+  redemptionDate: string;
+  productName: string;
+};
 
 export type Order = {
-    data_ordem: string;
-    account: string;
-    bank: string;
-    valor: number;
-    idProduto: string;
-    discriminatior: string;
-    Id: string;
-}
+  data_ordem: string;
+  account: string;
+  bank: string;
+  valor: number;
+  idProduto: string;
+  discriminatior: string;
+  Id: string;
+};
 
 export enum accounts {
-    conta1 = "7DdvvjmAC05J3Jdn4RXCr5ipl4fqcQpn9g9Cw9gO"
+  conta1 = '7DdvvjmAC05J3Jdn4RXCr5ipl4fqcQpn9g9Cw9gO'
 }
 
 export enum bankEnum {
-    banco1 = "banco1",
-    banco2 = "banco2",
-    banco3 = "banco3"
+  banco1 = 'banco1',
+  banco2 = 'banco2',
+  banco3 = 'banco3'
 }
 
 export const getMoneyMovementCard = async (bank: bankEnum, account: string) => {
-    /*
+  /*
     const endpointURL: string = `${bank}/money-movent/${account}/card`;
     const bankExtract: Response = await fetch(
     `${baseURL}${endpointURL}`,
@@ -70,7 +68,7 @@ export const getMoneyMovementCard = async (bank: bankEnum, account: string) => {
     });
     const json: Array<Transaction> = await bankExtract.json();
     */
-    const json: Array<Transaction> = JSON.parse(
+  const json: Array<Transaction> = JSON.parse(
     `[
         {
             "Bank": "banco1",
@@ -85,12 +83,13 @@ export const getMoneyMovementCard = async (bank: bankEnum, account: string) => {
             "Counterpart": "ToRBBtVLST3mGOs0ounFb5vSERvFLPNd4waVekFs",
             "CreatedAt": "2019-05-01T12:43:47"
         }
-    ]`); 
-    return json;
-}
+    ]`
+  );
+  return json;
+};
 
 export const getCard = async (bank: bankEnum, account: string) => {
-    /*
+  /*
     const endpointURL: string = `${bank}/card/${account}/`;
     const bankExtract: Response = await fetch(
     `${baseURL}${endpointURL}`,
@@ -104,7 +103,7 @@ export const getCard = async (bank: bankEnum, account: string) => {
     });
     const json: Array<Transaction> = await bankExtract.json();
     */
-    const json: Array<CardData> = JSON.parse(
+  const json: Array<CardData> = JSON.parse(
     `[
         {
             "Bank": "banco1",
@@ -113,14 +112,15 @@ export const getCard = async (bank: bankEnum, account: string) => {
             "CreditLimit": 10000,
             "Id": "cf7d79ae-9083-4454-a176-6937ea730cf6",
             "PaymentDay": "01",
-            "CreatedAt": "\"2019-06-24T18:07:18.186Z\""
+            "CreatedAt": "2019-06-24T18:07:18.186Z"
         }
-    ]`);
-    return json;
-}
+    ]`
+  );
+  return json;
+};
 
 export const getInvestments = async (bank: bankEnum) => {
-    /*
+  /*
     const endpointURL: string = `${bank}/investment`;
     const bankExtract: Response = await fetch(
     `${baseURL}${endpointURL}`,
@@ -134,7 +134,7 @@ export const getInvestments = async (bank: bankEnum) => {
     });
     const json: Array<Transaction> = await bankExtract.json();
     */
-    const json: Array<Investment> = JSON.parse(
+  const json: Array<Investment> = JSON.parse(
     `[{
         "bank": "banco3",
         "risk": "Conservador",
@@ -154,11 +154,12 @@ export const getInvestments = async (bank: bankEnum) => {
         "id": "a6fb1534-0a6a-4808-b7eb-dfa1c854c840",
         "redemptionDate": "D+3",
         "productName": "Fundo Cambial"
-    }]`);
-}
+    }]`
+  );
+};
 
 export const getOrders = async (bank: bankEnum, account: string) => {
-    /*
+  /*
     const endpointURL: string = `${bank}/orders/${account}`;
     const bankExtract: Response = await fetch(
     `${baseURL}${endpointURL}`,
@@ -172,7 +173,7 @@ export const getOrders = async (bank: bankEnum, account: string) => {
     });
     const json: Array<Transaction> = await bankExtract.json();
     */
-    const json: Array<Order> = JSON.parse(
+  const json: Array<Order> = JSON.parse(
     `[
         {
            "data_ordem": "2016-05-01",
@@ -192,6 +193,7 @@ export const getOrders = async (bank: bankEnum, account: string) => {
            "discriminator": "loan",
            "Id": "4882b6d1-e24f-4dab-924e-5536a7c93f13"
         }
-     ]`);
-     return json;
-}
+     ]`
+  );
+  return json;
+};

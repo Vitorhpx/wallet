@@ -4,20 +4,12 @@ interface Path {
 }
 
 export const AppPaths = {
-  login: {
+  home: {
+    path: '/home',
+    name: 'Home'
+  } as Path,
+  loginPage: {
     path: '/login',
     name: 'Login'
-  } as Path,
-  signup: {
-    path: '/registro',
-    name: 'Registar-se'
-  } as Path,
-  wallet: {
-    path: '/carteira',
-    name: 'Carteira'
-  } as Path,
-  history: {
-    path: '/extrato',
-    name: 'Extrato'
   } as Path
 };
