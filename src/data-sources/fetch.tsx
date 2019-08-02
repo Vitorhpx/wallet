@@ -1,4 +1,4 @@
-export const baseURL: string = 'https://www.btgpactual.com/btgcode/api/';
+export const baseURL: string = "https://www.btgpactual.com/btgcode/api/";
 
 export type Transaction = {
   Bank: string;
@@ -44,13 +44,13 @@ export type Order = {
 };
 
 export enum accounts {
-  conta1 = '7DdvvjmAC05J3Jdn4RXCr5ipl4fqcQpn9g9Cw9gO'
+  conta1 = "7DdvvjmAC05J3Jdn4RXCr5ipl4fqcQpn9g9Cw9gO"
 }
 
 export enum bankEnum {
-  banco1 = 'banco1',
-  banco2 = 'banco2',
-  banco3 = 'banco3'
+  banco1 = "banco1",
+  banco2 = "banco2",
+  banco3 = "banco3"
 }
 
 export const getMoneyMovementCard = async (bank: bankEnum, account: string) => {
@@ -156,44 +156,4 @@ export const getInvestments = async (bank: bankEnum) => {
         "productName": "Fundo Cambial"
     }]`
   );
-};
-
-export const getOrders = async (bank: bankEnum, account: string) => {
-  /*
-    const endpointURL: string = `${bank}/orders/${account}`;
-    const bankExtract: Response = await fetch(
-    `${baseURL}${endpointURL}`,
-    {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "x-api-key": account,
-        }
-    });
-    const json: Array<Transaction> = await bankExtract.json();
-    */
-  const json: Array<Order> = JSON.parse(
-    `[
-        {
-           "data_ordem": "2016-05-01",
-           "account": "X6XPMTOUOvmh4xzKHvbS6OKLPEYMHEh985pcHJD0",
-           "bank": "banco1",
-           "valor": 300000,
-           "idProduto": "259ad8ac-57b7-4d33-8e75-46cf5c5c28e3",
-           "discriminator": "investment",
-           "Id": "4882b6d1-e24f-4dab-924e-4428a7c93f13"
-        },
-        {
-           "data_ordem": "2017-06-01",
-           "account": "X6XPMTOUOvmh4xzKHvbS6OKLPEYMHEh985pcHJD0",
-           "bank": "banco1",
-           "valor": 200,
-           "idProduto": "259ad8ac-57b7-4d33-8e75-46cf5c5c28e2",
-           "discriminator": "loan",
-           "Id": "4882b6d1-e24f-4dab-924e-5536a7c93f13"
-        }
-     ]`
-  );
-  return json;
 };

@@ -1,3 +1,5 @@
+import { addMonthsUTC } from "../utils/Date";
+
 export interface Saldo {
   origem: string;
   tipo: "Saldo" | "Fundo de Emergência" | "Fundo de Risco";
@@ -63,6 +65,20 @@ export const historicoCategoriaMock: SaldoMensal[] = [
     data: new Date(2019, 5, 1)
   }
 ];
+
+export const getHistoricoPrevisão = (
+  todayMoney: number,
+  tax: number,
+  months: number
+) => {
+  return Array(months).map(index => {
+    const today = new Date();
+    return {
+      saldo: todayMoney * (1 + tax) ** index,
+      data: addMonthsUTC(today, index)
+    };
+  });
+};
 
 export const getSaldosGroupedbyType = (saldos: Saldo[]) => {
   var groups = {} as any;
