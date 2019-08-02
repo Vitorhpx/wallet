@@ -5,6 +5,19 @@ export const getDateToString = (date: Date) => {
   return `${getLiteralMonth(date.getMonth())}/${date.getFullYear()}`;
 };
 
+export function addMonthsUTC(date: Date, count: number) {
+  if (date && count) {
+    var m,
+      d = (date = new Date(+date)).getUTCDate();
+
+    date.setUTCMonth(date.getUTCMonth() + count, 1);
+    m = date.getUTCMonth();
+    date.setUTCDate(d);
+    if (date.getUTCMonth() !== m) date.setUTCDate(0);
+  }
+  return date;
+}
+
 export const getLiteralMonth = (month: number) => {
   switch (month) {
     case 0:

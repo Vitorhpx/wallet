@@ -1,12 +1,12 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { AppPaths } from '../src/utils/AppPaths';
-import './App.css';
-import GlobalThemeProvider from './components/atm.global-theme-provider/global-theme-provider.component';
-import AuthRedirect from './containers/auth-redirect/auth-redirect.container';
-import Home from './Home';
-import LoginPage from './LoginPage';
-import { AUTH_TOKEN } from './utils/API';
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { AppPaths } from "../src/utils/AppPaths";
+import "./App.css";
+import GlobalThemeProvider from "./components/atm.global-theme-provider/global-theme-provider.component";
+import AuthRedirect from "./containers/auth-redirect/auth-redirect.container";
+import Home from "./Home";
+import LoginPage from "./LoginPage";
+import { AUTH_TOKEN } from "./utils/API";
 
 export enum AppScreen {
   USER_PANEL,
@@ -25,7 +25,7 @@ const App: React.FunctionComponent<IAppProps> = props => {
     <Router>
       <GlobalThemeProvider>
         <AuthRedirect
-          isAutenticated={localStorage.getItem(AUTH_TOKEN) !== null}
+          isAutenticated={sessionStorage.getItem(AUTH_TOKEN) !== null}
           authenticatedTo={AppPaths.home.path}
           notAuthenticatedTo={AppPaths.loginPage.path}
         />
