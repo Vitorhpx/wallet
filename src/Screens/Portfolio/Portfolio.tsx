@@ -1,27 +1,23 @@
-import React, { useEffect } from "react";
-import { Col, Grid, Row } from "react-flexbox-grid";
-
-import { Divider, List, ListItem, ListItemText } from "@material-ui/core";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-
-import { H1, H3 } from "../../components/atm.typography/typography.component";
-import CategoryDetailRow from "../../components/mol.category-detail-row/category-detail-row.component";
+import { Divider, List, ListItem, ListItemText } from '@material-ui/core';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import { Dictionary, groupBy } from 'lodash';
+import React, { useEffect } from 'react';
+import { Col, Grid, Row } from 'react-flexbox-grid';
+import { H1, H3 } from '../../components/atm.typography/typography.component';
+import CategoryDetailRow from '../../components/mol.category-detail-row/category-detail-row.component';
 import PieChart, {
   PieDataItem
-} from "../../components/mol.pie-chart/pie-chart.component";
-import { getOrders, OrderData } from "../../data-sources/order";
+} from '../../components/mol.pie-chart/pie-chart.component';
+import { getInvestments, Investment } from '../../data-sources/investments';
+import { getOrders, OrderData } from '../../data-sources/order';
 import {
+  getHistoricoPrevisão,
   getSaldosGroupedbyType,
-  historicoCategoriaMock,
-  Saldo,
-  saldosMock,
-  getHistoricoPrevisão
-} from "../../data-sources/wallet";
-import { formatNumberToMoney } from "../../utils/String";
-import { getInvestments, Investment } from "../../data-sources/investments";
-import { groupBy, Dictionary } from "lodash";
-import { getProductClassification } from "../../utils/API";
+  saldosMock
+} from '../../data-sources/wallet';
+import { getProductClassification } from '../../utils/API';
+import { formatNumberToMoney } from '../../utils/String';
 
 interface IPortfolioProps {}
 
@@ -108,24 +104,24 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
         <p>Erro ao acessar os dados</p>
       ) : (
         <Grid fluid>
-          <Row center="xs">
+          <Row center='xs'>
             <Col xs={12} lg={8}>
               <PieChart data={data} />
             </Col>
           </Row>
-          <Row center="xs">
+          <Row center='xs'>
             <Col xs>
               <H1>Patrimônio: {formatNumberToMoney(patrimonio)}</H1>
             </Col>
           </Row>
-          <Row center="xs">
+          <Row center='xs'>
             <Col xs>
               <H3>{`Rendimento: ${tax}%`}</H3>
             </Col>
           </Row>
-          <Row center="xs">
+          <Row center='xs'>
             <Col xs={12} md={8}>
-              <List component="nav" aria-labelledby="nested-list-subheader">
+              <List component='nav' aria-labelledby='nested-list-subheader'>
                 {data.map((item, index) => (
                   <React.Fragment key={item.item}>
                     <ListItem button onClick={() => handleCellClick(index)}>
@@ -137,10 +133,6 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
                       {index === selectedCell ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
 
-                    {console.log(
-                      "TCL: item.item",
-                      ordersGroupedByClassification![item.item]
-                    )}
                     {index === selectedCell && (
                       <CategoryDetailRow
                         categoryData={{
@@ -153,7 +145,7 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
                           graphData: getHistoricoPrevisão(
                             item.value,
                             item.tax,
-                            5
+                            12
                           ).map(item => ({
                             date: item.data,
                             value: item.saldo
@@ -179,8 +171,8 @@ function getOrdersbyClassification(
   orders: OrderData[],
   investments: Investment[]
 ) {
-  const groupedOrders = groupBy(orders, "idProduto");
-  const groupedInvestments = groupBy(investments, "id");
+  const groupedOrders = groupBy(orders, 'idProduto');
+  const groupedInvestments = groupBy(investments, 'id');
   const ordersById = Object.keys(groupedOrders).map(key => ({
     id: key,
     name: groupedInvestments[key][0].productName,
@@ -193,7 +185,7 @@ function getOrdersbyClassification(
       return sum + curr.valor;
     }, 0)
   }));
-  const ordersGroupedByClassification = groupBy(ordersById, "classification");
+  const ordersGroupedByClassification = groupBy(ordersById, 'classification');
   return ordersGroupedByClassification;
 }
 

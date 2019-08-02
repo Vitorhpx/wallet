@@ -1,35 +1,35 @@
-import { addMonthsUTC } from "../utils/Date";
+import { addMonthsUTC } from '../utils/Date';
 
 export interface Saldo {
   origem: string;
-  tipo: "Saldo" | "Fundo de Emergência" | "Fundo de Risco";
+  tipo: 'Saldo' | 'Fundo de Emergência' | 'Fundo de Risco';
   valor: number;
 }
 
 export const saldosMock: Saldo[] = [
   {
-    origem: "Saldo",
-    tipo: "Saldo",
+    origem: 'Saldo',
+    tipo: 'Saldo',
     valor: 1200
   },
   {
-    origem: "BTG Fundo 1",
-    tipo: "Fundo de Emergência",
+    origem: 'BTG Fundo 1',
+    tipo: 'Fundo de Emergência',
     valor: 2509
   },
   {
-    origem: "BTG Fundo 2",
-    tipo: "Fundo de Emergência",
+    origem: 'BTG Fundo 2',
+    tipo: 'Fundo de Emergência',
     valor: 6000
   },
   {
-    origem: "BTG Fundo 3",
-    tipo: "Fundo de Risco",
+    origem: 'BTG Fundo 3',
+    tipo: 'Fundo de Risco',
     valor: 2344
   },
   {
-    origem: "BTG Fundo 4",
-    tipo: "Fundo de Risco",
+    origem: 'BTG Fundo 4',
+    tipo: 'Fundo de Risco',
     valor: 1234
   }
 ];
@@ -71,13 +71,15 @@ export const getHistoricoPrevisão = (
   tax: number,
   months: number
 ) => {
-  return Array(months).map(index => {
-    const today = new Date();
-    return {
-      saldo: todayMoney * (1 + tax) ** index,
-      data: addMonthsUTC(today, index)
-    };
-  });
+  return Array(months)
+    .fill(1)
+    .map((_, index) => {
+      const today = new Date();
+      return {
+        saldo: todayMoney * (1 + tax / 100) ** index,
+        data: addMonthsUTC(today, index)
+      };
+    });
 };
 
 export const getSaldosGroupedbyType = (saldos: Saldo[]) => {
