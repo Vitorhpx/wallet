@@ -61,7 +61,7 @@ export const SignIn: React.FunctionComponent<ISignInProps> = props => {
     axios
       .post(`${baseUrl}${authUrl}`, user)
       .then(res => {
-        console.log('TCL: handleSubmit -> res', res);
+        console.log('TCL: handleSubmit -> res', res.data);
         const { token, bankToken, banks } = res.data;
         sessionStorage.setItem(AUTH_TOKEN, token);
         sessionStorage.setItem(BANK_TOKEN, bankToken);

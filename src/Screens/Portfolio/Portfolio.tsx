@@ -21,6 +21,7 @@ import {
 } from '../../utils/API';
 import { formatNumberToMoney } from '../../utils/String';
 import { getUserInfo } from '../../data-sources/users';
+import { useBankToken } from '../../hooks/useBankToken';
 
 interface IPortfolioProps {}
 
@@ -49,25 +50,27 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
   const [filteredData, setFilteredData] = React.useState<FundInfo[]>();
   const [fetchError, setFetchError] = React.useState();
   // const bankToken = useBankToken(authToken as string);
-  const bankToken = sessionStorage.getItem(BANK_TOKEN) as string;
-  //todo remove hardcode mock
-  const banco = 'banco1';
+  const bankToken = useBankToken(sessionStorage.getItem(AUTH_TOKEN) as string);
 
   useEffect(() => {
     try {
-      Promise.all([
-        getOrders(bankToken, banco),
-        getInvestments(bankToken, banco),
-        getAccounts(bankToken, banco)
-      ]).then(response => {
-        const ordersGroupedByClassification = getOrdersbyClassification(
-          response[0].data as OrderData[],
-          response[1].data as Investment[],
-          response[2].data as BankData[]
-        );
-        set0rdersGroupedByClassification(ordersGroupedByClassification);
-        const sortedData = sortData(ordersGroupedByClassification);
-        setFilteredData(sortedData);
+      getUserInfo(sessionStorage.getItem(AUTH_TOKEN) as string).then(res => {
+        const banco = res.data.data.banks[0];
+        const bankKey = res.data.data.bankToken;
+        Promise.all([
+          getOrders(bankKey, banco),
+          getInvestments(bankKey, banco),
+          getAccounts(bankKey, banco)
+        ]).then(response => {
+          const ordersGroupedByClassification = getOrdersbyClassification(
+            response[0].data as OrderData[],
+            response[1].data as Investment[],
+            response[2].data as BankData[]
+          );
+          set0rdersGroupedByClassification(ordersGroupedByClassification);
+          const sortedData = sortData(ordersGroupedByClassification);
+          setFilteredData(sortedData);
+        });
       });
     } catch (error) {
       setFetchError(error);

@@ -8,7 +8,11 @@ export function useBank(accessToken: string) {
   useEffect(() => {
     async function getUserBank() {
       const response = await getUserInfo(accessToken);
-      const { banks } = response.data;
+      const { banks } = response.data.data;
+      console.log(
+        'TCL: getUserBank -> response.data',
+        response.data.data.banks
+      );
       console.log('TCL: getUserBank -> banks', banks);
       sessionStorage.setItem(BANKS, banks[0]);
       setBank(bank);

@@ -8,7 +8,7 @@ export function useBankToken(accessToken: string) {
   useEffect(() => {
     async function getUserBank() {
       const response = await getUserInfo(accessToken);
-      const bankToken = response.data.bankToken;
+      const bankToken = response.data.data.bankToken;
       sessionStorage.setItem(BANK_TOKEN, bankToken);
       setBankToken(bankToken);
     }

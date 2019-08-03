@@ -16,11 +16,9 @@ export const getAccounts = (bankToken: string, bank: string) => {
       }
     )
     .then(response => {
-      console.log('TCL: getOrders -> response', response);
       return response;
     })
     .catch(error => {
-      console.log('TCL: getOrders -> error', error);
       return error;
     });
 };

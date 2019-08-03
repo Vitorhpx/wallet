@@ -19,10 +19,12 @@ export interface UserRegisterInfo extends UserLoginInfo {
 export const user = '/user';
 
 export interface UserInfo extends UserLoginInfo {
-  name: string;
-  bankToken: string;
-  email: string;
-  banks: string[];
+  data: {
+    name: string;
+    bankToken: string;
+    email: string;
+    banks: string[];
+  };
 }
 
 export const getUserInfo = (accessToken: string) => {

@@ -1,15 +1,15 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Wallet",
+  "name": "Wallet - Invests made easy",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "Loguinho.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#4a148c",
+  "background_color": "#bbdefb"
 }

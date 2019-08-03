@@ -12,7 +12,7 @@ export interface OrderData {
 
 export const getOrders = (bankToken: string, bank: string) => {
   return axios
-    .get(`https://www.btgpactual.com/btgcode/api/${bank}/orders/${bankToken}`, {
+    .get(`http://www.btgpactual.com/btgcode/api/${bank}/orders/${bankToken}`, {
       headers: { 'x-api-key': bankToken }
     })
     .then(response => {
