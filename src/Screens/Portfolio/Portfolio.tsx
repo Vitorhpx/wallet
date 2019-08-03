@@ -13,13 +13,13 @@ import { BankData, getAccounts } from '../../data-sources/accounts';
 import { getInvestments, Investment } from '../../data-sources/investments';
 import { getOrders, OrderData } from '../../data-sources/order';
 import { getHistoricoPrevisão } from '../../data-sources/wallet';
+import { useBank } from '../../hooks/useBank';
 import {
+  AUTH_TOKEN,
   BANK_TOKEN,
-  getProductClassification,
-  AUTH_TOKEN
+  getProductClassification
 } from '../../utils/API';
 import { formatNumberToMoney } from '../../utils/String';
-import { useBank } from '../../hooks/useBank';
 
 interface IPortfolioProps {}
 
@@ -49,7 +49,7 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
   const [fetchError, setFetchError] = React.useState();
   // const bankToken = useBankToken(authToken as string);
   const bankToken = sessionStorage.getItem(BANK_TOKEN) as string;
-  const banco = 'banco1';
+  const banco = useBank(sessionStorage.getItem(AUTH_TOKEN) as string);
 
   useEffect(() => {
     try {
