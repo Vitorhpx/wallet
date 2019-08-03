@@ -1,7 +1,6 @@
-import { AppBar, Button, IconButton } from "@material-ui/core";
-import { AccountCircle } from "@material-ui/icons/";
-import React from "react";
-import { ButtonsWrapper, IconWrapper, StyledToolBar } from "./navBar.style";
+import { AppBar, Button } from '@material-ui/core';
+import React from 'react';
+import { ButtonsWrapper, StyledToolBar } from './navBar.style';
 
 type NavBarProps = {
   handleAccountClick: (event: any) => void;
@@ -11,22 +10,17 @@ type NavBarProps = {
 };
 
 const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => (
-  <AppBar position={"static"}>
+  <AppBar position={'static'}>
     <StyledToolBar>
-      <IconWrapper>
-        <IconButton color={"secondary"} onClick={props.handleAccountClick}>
-          <AccountCircle />
-        </IconButton>
-      </IconWrapper>
       <ButtonsWrapper>
-        <Button color={"secondary"} onClick={props.handleWalletClick}>
+        <Button color={'secondary'} onClick={props.handleWalletClick}>
           Carteira
         </Button>
-        <Button color={"secondary"} onClick={props.handleHistoryClick}>
+        <Button color={'secondary'} onClick={props.handleHistoryClick}>
           Extrato
         </Button>
 
-        <Button color={"secondary"} onClick={props.handleExitClick}>
+        <Button color={'secondary'} onClick={props.handleExitClick}>
           Sair
         </Button>
       </ButtonsWrapper>

@@ -1,61 +1,51 @@
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import React, { Component } from 'react';
-import {
-  accounts,
-  bankEnum,
-  getMoneyMovementCard,
-  Transaction
-} from '../../data-sources/fetch';
+import React, { Component, useEffect } from 'react';
+import { Transaction } from '../../data-sources/fetch';
+import { getOrders, OrderData } from '../../data-sources/order';
 import { formatDateTime, formatNumberToMoney } from '../../utils/String';
+import { ArrowUpward } from '@material-ui/icons';
+import { ListItemIcon, Grid } from '@material-ui/core';
 
-type HistoryState = {
-  transactions: Array<Transaction>;
-};
+interface IHistoryProps {}
 
-class History extends Component<{}, HistoryState> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      transactions: []
-    };
-  }
+const History: React.FunctionComponent<IHistoryProps> = props => {
+  const [orders, setOrders] = React.useState<OrderData[]>([]);
 
-  async componentDidMount() {
-    console.log(this.state);
-    if (this.state.transactions.length === 0) {
-      const bank1History: Array<Transaction> = await getMoneyMovementCard(
-        bankEnum.banco1,
-        accounts.conta1
-      );
-      this.setState({ transactions: bank1History });
+  useEffect(() => {
+    async function fetchAPI() {
+      const response = await getOrders();
+      setOrders(response.data as OrderData[]);
     }
-  }
+    fetchAPI();
+  }, []);
 
-  render() {
-    return (
-      <div>
+  return (
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
         <List component='nav' aria-labelledby='nested-list-subheader'>
-          {this.state.transactions.map(
-            (transaction: Transaction, key: number) => (
+          {orders &&
+            orders.map((transaction: OrderData, key: number) => (
               <ListItem key={key}>
+                <ListItemIcon>
+                  <ArrowUpward />
+                </ListItemIcon>
+                <ListItemText primary={`Investimento`} />
                 <ListItemText
-                  primary={`${formatNumberToMoney(transaction.Amount)}`}
-                  secondary={` ${formatDateTime(transaction.CreatedAt)}`}
+                  primary={`${formatNumberToMoney(transaction.valor)}`}
+                  secondary={` ${formatDateTime(transaction.data_ordem)}`}
                 />
                 <ListItemText
-                  primary={`${transaction.Desc}`}
-                  secondary={`${transaction.TypeTransaction}`}
+                  primary={`${transaction.Id}`}
+                  secondary={`${transaction.bank}`}
                 />
-                <ListItemText primary={`${transaction.Bank}`} />
               </ListItem>
-            )
-          )}
+            ))}
         </List>
-      </div>
-    );
-  }
-}
+      </Grid>
+    </Grid>
+  );
+};
 
 export default History;

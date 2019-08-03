@@ -16,6 +16,7 @@ import {
   getSaldosGroupedbyType,
   saldosMock
 } from '../../data-sources/wallet';
+import { getAccounts, BankData } from '../../data-sources/accounts';
 import { getProductClassification } from '../../utils/API';
 import { formatNumberToMoney } from '../../utils/String';
 
@@ -50,16 +51,18 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
 
   useEffect(() => {
     try {
-      Promise.all([getOrders(), getInvestments()]).then(response => {
-        const ordersGroupedByClassification = getOrdersbyClassification(
-          response[0].data as OrderData[],
-          response[1].data as Investment[]
-        );
-        set0rdersGroupedByClassification(ordersGroupedByClassification);
-
-        const sortedData = sortData(ordersGroupedByClassification);
-        setFilteredData(sortedData);
-      });
+      Promise.all([getOrders(), getInvestments(), getAccounts()]).then(
+        response => {
+          const ordersGroupedByClassification = getOrdersbyClassification(
+            response[0].data as OrderData[],
+            response[1].data as Investment[],
+            response[2].data as BankData[]
+          );
+          set0rdersGroupedByClassification(ordersGroupedByClassification);
+          const sortedData = sortData(ordersGroupedByClassification);
+          setFilteredData(sortedData);
+        }
+      );
     } catch (error) {
       setFetchError(error);
     }
@@ -104,6 +107,7 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
         <p>Erro ao acessar os dados</p>
       ) : (
         <Grid fluid>
+          {console.log(111, ordersGroupedByClassification)}
           <Row center='xs'>
             <Col xs={12} lg={8}>
               <PieChart data={data} />
@@ -116,7 +120,7 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
           </Row>
           <Row center='xs'>
             <Col xs>
-              <H3>{`Rendimento: ${tax}%`}</H3>
+              <H3>{`Rendimento: ${tax.toFixed(2)}%`}</H3>
             </Col>
           </Row>
           <Row center='xs'>
@@ -169,7 +173,8 @@ export default React.memo(Portfolio);
 
 function getOrdersbyClassification(
   orders: OrderData[],
-  investments: Investment[]
+  investments: Investment[],
+  bankInfo: BankData[]
 ) {
   const groupedOrders = groupBy(orders, 'idProduto');
   const groupedInvestments = groupBy(investments, 'id');
@@ -185,7 +190,18 @@ function getOrdersbyClassification(
       return sum + curr.valor;
     }, 0)
   }));
-  const ordersGroupedByClassification = groupBy(ordersById, 'classification');
+  const bankData = bankInfo.map(bank => ({
+    id: bank.Id,
+    name: `Conta Corrente - ${bank.Bank}`,
+    bank: bank.Bank,
+    risk: 'Zero',
+    classification: 'Saldo',
+    discriminator: '',
+    tax: '0',
+    value: bank.Amount
+  }));
+  const allOrders = ordersById.concat(bankData);
+  const ordersGroupedByClassification = groupBy(allOrders, 'classification');
   return ordersGroupedByClassification;
 }
 

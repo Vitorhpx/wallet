@@ -1,6 +1,6 @@
-import * as React from "react";
-import { Chart, Axis, Geom, Tooltip } from "bizcharts";
-import { Color } from "../../utils/Constants";
+import * as React from 'react';
+import { Chart, Axis, Geom, Tooltip } from 'bizcharts';
+import { Color } from '../../utils/Constants';
 
 interface ILineChartProps {
   data: {
@@ -18,16 +18,16 @@ const LineChart: React.FunctionComponent<ILineChartProps> = props => {
   return (
     <Chart height={350} data={data} scale={scale} forceFit>
       <Axis />
-      <Axis name="Valor " />
-      <Tooltip crosshairs={{ type: "y" }} />
-      <Geom type="line" position="x*y" size={2} color={`${Color.primary}`} />
+      <Axis name='Valor ' />
+      <Tooltip crosshairs={{ type: 'y' }} />
+      <Geom type='line' position='x*y' size={2} color={`${Color.primary}`} />
       <Geom
-        type="point"
-        position="x*y"
+        type='point'
+        position='x*y'
         size={4}
-        shape={"circle"}
+        shape={'circle'}
         color={`${Color.primary}`}
-        style={{ stroke: "#fff", lineWidth: 1 }}
+        style={{ stroke: '#fff', lineWidth: 1 }}
       />
     </Chart>
   );
