@@ -51,6 +51,8 @@ const SignUp: React.FunctionComponent<ISignUpProps> = props => {
   const classes = useStyles();
 
   const [username, setUsername] = React.useState();
+  const [name, setName] = React.useState();
+  const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [bankToken, setBankToken] = React.useState();
 
@@ -59,6 +61,8 @@ const SignUp: React.FunctionComponent<ISignUpProps> = props => {
 
     const user: UserRegisterInfo = {
       username: username,
+      name: name,
+      email: email,
       password: password,
       bankToken: bankToken
     };
@@ -96,9 +100,31 @@ const SignUp: React.FunctionComponent<ISignUpProps> = props => {
                 required
                 fullWidth
                 id="username"
-                label="Nome de Usuário"
+                label="Usuário"
                 name="username"
                 onChange={event => setUsername(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="name"
+                label="Nome Completo"
+                name="name"
+                onChange={event => setName(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                onChange={event => setEmail(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
