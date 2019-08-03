@@ -70,6 +70,7 @@ const SignUp: React.FunctionComponent<ISignUpProps> = props => {
     axios
       .post(`${baseUrl}${registerUrl}`, user)
       .then(res => {
+        console.log('TCL: handleSubmit -> res', res);
         const { token, bankToken } = res.data;
         sessionStorage.setItem(AUTH_TOKEN, token);
         sessionStorage.setItem(BANK_TOKEN, bankToken);
