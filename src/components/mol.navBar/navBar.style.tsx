@@ -7,11 +7,8 @@ export const StyledToolBar = styled.div`
   padding: 0 ${Spacing.Medium} 0 0;
 `;
 
-export const IconWrapper = styled.div`
-  flex: 1;
-`;
+export const IconWrapper = styled.div``;
 
 export const ButtonsWrapper = styled.div`
-  flex: 1;
-  text-align: right;
+  margin-left: auto;
 `;
