@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export interface Investment {
   bank: string;
@@ -12,17 +12,17 @@ export interface Investment {
   aniversary: string;
 }
 
-export const getInvestments = () => {
+export const getInvestments = (bankToken: string, bank: string) => {
   return axios
-    .get(`https://www.btgpactual.com/btgcode/api/banco1/investment`, {
-      headers: { "x-api-key": "UCm7mbAn7377I4tZeRvBn9QnCxZxwGLn1ThepFj2" }
+    .get(`https://www.btgpactual.com/btgcode/api/${bank}/investment`, {
+      headers: { 'x-api-key': bankToken }
     })
     .then(response => {
-      console.log("TCL: getInvestments -> response", response);
+      console.log('TCL: getInvestments -> response', response);
       return response;
     })
     .catch(error => {
-      console.log("TCL: getInvestments -> error", error);
+      console.log('TCL: getInvestments -> error', error);
       return error;
     });
 };

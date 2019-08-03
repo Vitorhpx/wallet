@@ -7,12 +7,12 @@ export interface BankData {
   Name: string;
 }
 
-export const getAccounts = () => {
+export const getAccounts = (bankToken: string, bank: string) => {
   return axios
     .get(
-      `https://www.btgpactual.com/btgcode/api/banco3/accounts/UCm7mbAn7377I4tZeRvBn9QnCxZxwGLn1ThepFj2`,
+      `https://www.btgpactual.com/btgcode/api/${bank}/accounts/${bankToken}`,
       {
-        headers: { 'x-api-key': 'UCm7mbAn7377I4tZeRvBn9QnCxZxwGLn1ThepFj2' }
+        headers: { 'x-api-key': bankToken }
       }
     )
     .then(response => {

@@ -1,25 +1,29 @@
+import { Grid, ListItemIcon } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import React, { Component, useEffect } from 'react';
-import { Transaction } from '../../data-sources/fetch';
-import { getOrders, OrderData } from '../../data-sources/order';
-import { formatDateTime, formatNumberToMoney } from '../../utils/String';
 import { ArrowUpward } from '@material-ui/icons';
-import { ListItemIcon, Grid } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { getOrders, OrderData } from '../../data-sources/order';
+import { AUTH_TOKEN, BANK_TOKEN } from '../../utils/API';
+import { formatDateTime, formatNumberToMoney } from '../../utils/String';
+import { useBank } from '../../hooks/useBank';
 
 interface IHistoryProps {}
 
 const History: React.FunctionComponent<IHistoryProps> = props => {
   const [orders, setOrders] = React.useState<OrderData[]>([]);
+  const authToken = sessionStorage.getItem(AUTH_TOKEN);
+  const bankToken = sessionStorage.getItem(BANK_TOKEN);
+  const bank = useBank(authToken as string);
 
   useEffect(() => {
     async function fetchAPI() {
-      const response = await getOrders();
+      const response = await getOrders(bankToken as string, bank);
       setOrders(response.data as OrderData[]);
     }
     fetchAPI();
-  }, []);
+  }, [bankToken]);
 
   return (
     <Grid container spacing={2}>

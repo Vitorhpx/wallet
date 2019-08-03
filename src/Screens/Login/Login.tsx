@@ -11,7 +11,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import axios from 'axios';
 import React from 'react';
 import { authUrl, baseUrl } from '../../data-sources/users';
-import { AUTH_TOKEN } from '../../utils/API';
+import { AUTH_TOKEN, BANK_TOKEN } from '../../utils/API';
 import { AppPaths } from '../../utils/AppPaths';
 
 const useStyles = makeStyles(theme => ({
@@ -61,8 +61,9 @@ export const SignIn: React.FunctionComponent<ISignInProps> = props => {
     axios
       .post(`${baseUrl}${authUrl}`, user)
       .then(res => {
-        const { token } = res.data;
+        const { token, bankToken } = res.data;
         sessionStorage.setItem(AUTH_TOKEN, token);
+        sessionStorage.setItem(BANK_TOKEN, bankToken);
         if (token) {
           window.location.replace(AppPaths.home.path);
         }

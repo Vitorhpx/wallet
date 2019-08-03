@@ -10,12 +10,11 @@ export interface OrderData {
   Id: string;
 }
 
-export const getOrders = () => {
+export const getOrders = (bankToken: string, bank: string) => {
   return axios
-    .get(
-      `https://www.btgpactual.com/btgcode/api/banco1/orders/UCm7mbAn7377I4tZeRvBn9QnCxZxwGLn1ThepFj2`,
-      { headers: { 'x-api-key': 'UCm7mbAn7377I4tZeRvBn9QnCxZxwGLn1ThepFj2' } }
-    )
+    .get(`https://www.btgpactual.com/btgcode/api/${bank}/orders/${bankToken}`, {
+      headers: { 'x-api-key': bankToken }
+    })
     .then(response => {
       console.log('TCL: getOrders -> response', response);
       return response;

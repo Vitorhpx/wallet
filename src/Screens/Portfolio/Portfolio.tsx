@@ -9,16 +9,17 @@ import CategoryDetailRow from '../../components/mol.category-detail-row/category
 import PieChart, {
   PieDataItem
 } from '../../components/mol.pie-chart/pie-chart.component';
+import { BankData, getAccounts } from '../../data-sources/accounts';
 import { getInvestments, Investment } from '../../data-sources/investments';
 import { getOrders, OrderData } from '../../data-sources/order';
+import { getHistoricoPrevisão } from '../../data-sources/wallet';
 import {
-  getHistoricoPrevisão,
-  getSaldosGroupedbyType,
-  saldosMock
-} from '../../data-sources/wallet';
-import { getAccounts, BankData } from '../../data-sources/accounts';
-import { getProductClassification } from '../../utils/API';
+  BANK_TOKEN,
+  getProductClassification,
+  AUTH_TOKEN
+} from '../../utils/API';
 import { formatNumberToMoney } from '../../utils/String';
+import { useBank } from '../../hooks/useBank';
 
 interface IPortfolioProps {}
 
@@ -40,33 +41,36 @@ interface FundInfo {
 }
 
 const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
-  const saldosGrouped = getSaldosGroupedbyType(saldosMock);
   const [
     ordersGroupedByClassification,
     set0rdersGroupedByClassification
   ] = React.useState<Dictionary<any>>();
   const [filteredData, setFilteredData] = React.useState<FundInfo[]>();
-  const [investmentsData, setInvestmentsData] = React.useState<Investment[]>();
   const [fetchError, setFetchError] = React.useState();
+  // const bankToken = useBankToken(authToken as string);
+  const bankToken = sessionStorage.getItem(BANK_TOKEN) as string;
+  const banco = 'banco1';
 
   useEffect(() => {
     try {
-      Promise.all([getOrders(), getInvestments(), getAccounts()]).then(
-        response => {
-          const ordersGroupedByClassification = getOrdersbyClassification(
-            response[0].data as OrderData[],
-            response[1].data as Investment[],
-            response[2].data as BankData[]
-          );
-          set0rdersGroupedByClassification(ordersGroupedByClassification);
-          const sortedData = sortData(ordersGroupedByClassification);
-          setFilteredData(sortedData);
-        }
-      );
+      Promise.all([
+        getOrders(bankToken, banco),
+        getInvestments(bankToken, banco),
+        getAccounts(bankToken, banco)
+      ]).then(response => {
+        const ordersGroupedByClassification = getOrdersbyClassification(
+          response[0].data as OrderData[],
+          response[1].data as Investment[],
+          response[2].data as BankData[]
+        );
+        set0rdersGroupedByClassification(ordersGroupedByClassification);
+        const sortedData = sortData(ordersGroupedByClassification);
+        setFilteredData(sortedData);
+      });
     } catch (error) {
       setFetchError(error);
     }
-  }, []);
+  }, [banco, bankToken]);
 
   //TODO: Move to Backend
   //Refactor
@@ -107,7 +111,6 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
         <p>Erro ao acessar os dados</p>
       ) : (
         <Grid fluid>
-          {console.log(111, ordersGroupedByClassification)}
           <Row center='xs'>
             <Col xs={12} lg={8}>
               <PieChart data={data} />
@@ -190,7 +193,7 @@ function getOrdersbyClassification(
       return sum + curr.valor;
     }, 0)
   }));
-  const bankData = bankInfo.map(bank => ({
+  const bankData = (bankInfo || []).map(bank => ({
     id: bank.Id,
     name: `Conta Corrente - ${bank.Bank}`,
     bank: bank.Bank,
