@@ -22,6 +22,7 @@ import {
 import { formatNumberToMoney } from '../../utils/String';
 import { getUserInfo } from '../../data-sources/users';
 import { useBankToken } from '../../hooks/useBankToken';
+import ExtractModal from '../../components/mol.modal/modal';
 
 interface IPortfolioProps {}
 
@@ -49,6 +50,7 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
   ] = React.useState<Dictionary<any>>();
   const [filteredData, setFilteredData] = React.useState<FundInfo[]>();
   const [fetchError, setFetchError] = React.useState();
+  const [modalOpen, setModalOpen] = React.useState(true);
   // const bankToken = useBankToken(authToken as string);
   const bankToken = useBankToken(sessionStorage.getItem(AUTH_TOKEN) as string);
 
@@ -116,6 +118,10 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
         <p>Erro ao acessar os dados</p>
       ) : (
         <Grid fluid>
+          <ExtractModal
+            handleClose={() => setModalOpen(false)}
+            isOpen={modalOpen}
+          />
           <Row center='xs'>
             <Col xs={12} lg={8}>
               <PieChart data={data} />

@@ -41,10 +41,6 @@ const History: React.FunctionComponent<IHistoryProps> = props => {
                   primary={`${formatNumberToMoney(transaction.valor)}`}
                   secondary={` ${formatDateTime(transaction.data_ordem)}`}
                 />
-                <ListItemText
-                  primary={`${transaction.Id}`}
-                  secondary={`${transaction.bank}`}
-                />
               </ListItem>
             ))}
         </List>
