@@ -7,16 +7,12 @@ export function useBank(accessToken: string) {
 
   useEffect(() => {
     async function getUserBank() {
-      //todo: pegar o banco certo da API
-      if (sessionStorage.getItem(BANKS) !== null) {
-        setBank('banco1');
-      } else {
-        //const response = await getUserInfo(accessToken);
-        sessionStorage.setItem(BANKS, 'banco1');
-        setBank(bank);
-      }
+      const response = await getUserInfo(accessToken);
+      const { banks } = response.data;
+      console.log('TCL: getUserBank -> banks', banks);
+      sessionStorage.setItem(BANKS, banks[0]);
+      setBank(bank);
     }
-
     getUserBank();
   }, [accessToken, bank]);
 

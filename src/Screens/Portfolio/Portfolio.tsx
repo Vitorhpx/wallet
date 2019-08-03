@@ -20,6 +20,7 @@ import {
   getProductClassification
 } from '../../utils/API';
 import { formatNumberToMoney } from '../../utils/String';
+import { getUserInfo } from '../../data-sources/users';
 
 interface IPortfolioProps {}
 
@@ -49,7 +50,8 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
   const [fetchError, setFetchError] = React.useState();
   // const bankToken = useBankToken(authToken as string);
   const bankToken = sessionStorage.getItem(BANK_TOKEN) as string;
-  const banco = useBank(sessionStorage.getItem(AUTH_TOKEN) as string);
+  //todo remove hardcode mock
+  const banco = 'banco1';
 
   useEffect(() => {
     try {
@@ -70,7 +72,7 @@ const Portfolio: React.FunctionComponent<IPortfolioProps> = props => {
     } catch (error) {
       setFetchError(error);
     }
-  }, [banco, bankToken]);
+  }, [bankToken]);
 
   //TODO: Move to Backend
   //Refactor
@@ -186,7 +188,7 @@ function getOrdersbyClassification(
     name: groupedInvestments[key][0].productName,
     bank: groupedInvestments[key][0].bank,
     risk: groupedInvestments[key][0].risk,
-    classification: getProductClassification(groupedInvestments[key][0].risk),
+    classification: getProductClassification(groupedInvestments[key][0].id),
     discriminator: groupedInvestments[key][0].discriminator,
     tax: groupedInvestments[key][0].tax,
     value: groupedOrders[key].reduce((sum: number, curr: OrderData) => {

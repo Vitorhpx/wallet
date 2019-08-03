@@ -15,7 +15,8 @@ const History: React.FunctionComponent<IHistoryProps> = props => {
   const [orders, setOrders] = React.useState<OrderData[]>([]);
   const authToken = sessionStorage.getItem(AUTH_TOKEN);
   const bankToken = sessionStorage.getItem(BANK_TOKEN);
-  const bank = useBank(authToken as string);
+  // const bank = useBank(authToken as string);
+  const bank = 'banco1';
 
   useEffect(() => {
     async function fetchAPI() {
@@ -23,7 +24,7 @@ const History: React.FunctionComponent<IHistoryProps> = props => {
       setOrders(response.data as OrderData[]);
     }
     fetchAPI();
-  }, [bankToken]);
+  }, [bankToken, bank]);
 
   return (
     <Grid container spacing={2}>

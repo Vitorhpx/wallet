@@ -1,26 +1,28 @@
 import axios from 'axios';
 
-export const baseUrl = 'https://y220sfo8mg.execute-api.us-east-1.amazonaws.com';
+export const baseUrl =
+  'https://hp9ebx8kqg.execute-api.us-east-1.amazonaws.com/stage';
 
-export const authUrl = '/dev/auth';
+export const authUrl = '/auth';
 export interface UserLoginInfo {
   username: string;
   password: string;
 }
 
-export const registerUrl = '/dev/register';
+export const registerUrl = '/register';
 export interface UserRegisterInfo extends UserLoginInfo {
   name: string;
   bankToken: string;
   email: string;
 }
 
-export const user = '/dev/user';
+export const user = '/user';
 
 export interface UserInfo extends UserLoginInfo {
   name: string;
   bankToken: string;
   email: string;
+  banks: string[];
 }
 
 export const getUserInfo = (accessToken: string) => {
